@@ -240,6 +240,11 @@ Route::group(['prefix' => 'data', 'namespace' => 'Data', 'middleware' => 'power:
     Route::post('prompts/delete/{id}', 'PromptController@postDeletePrompt');
 });
 
+// TESGROUND (WIP)
+Route::group(['prefix' => 'testground', 'middleware' => 'power:edit_pages'], function () {
+Route::get('/', 'TestgroundController@getIndex');
+});
+
 // PAGES
 Route::group(['prefix' => 'pages', 'middleware' => 'power:edit_pages'], function () {
     Route::get('/', 'PageController@getIndex');

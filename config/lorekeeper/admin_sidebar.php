@@ -55,6 +55,10 @@ return [
                 'name' => 'Pages',
                 'url'  => 'admin/pages',
             ],
+            [
+                'name' => 'Testground',
+                'url'  => 'admin/testground',
+            ],
         ],
     ],
     'Users'      => [
