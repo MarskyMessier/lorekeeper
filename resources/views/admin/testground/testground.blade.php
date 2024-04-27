@@ -11,10 +11,92 @@
 
     <p>Here you can check the different properties and classes Lorekeeper has, useful when you change the style or have theme manager enabled on it.
         To change the text you will need to go edit the testground.blade directly for now.
+        <br>
+        Everything down here can be found under boostrap 4, so for those under boostrap 5 might need to add what's new to it.
     </p>
 
 <br>
 
+<div class="card" style="max-width: 300px;">
+  <div class="card-header pt-3">
+    <h5>
+      <i class="fas fa-list mr-2"></i>
+      Table of content
+    </h5>
+  </div>
+
+  <div class="card-body px-2">
+    <ul>
+
+      <li class="pb-2">
+        <a href="#" id="headinglk" data-toggle="collapse" data-target="#collapselk" aria-expanded="true" aria-controls="collapselk">
+          Lorekeeper commons
+        </a>
+        <ol id="collapselk" class="collapse show" aria-labelledby="headinglk">
+          <li><a href="#lknavbar">Lorekeeper's navbar</a></li>
+          <li><a href="#lktables">Notification table</a></li>
+          <li><a href="#lktext">Text & headings</a></li>
+          <li><a href="#lkbody">Cards, containers and body</a></li>
+        </ol>
+      </li>
+      <li class="pb-2">
+        <a href="#" id="heading1" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+          Content
+        </a>
+        <ol id="collapse1" class="collapse show" aria-labelledby="heading1">
+          <li><a href="#container">Containers</a></li>
+          <li><a href="#typo">Typography</a></li>
+          <li><a href="#code">Code display</a></li>
+          <li><a href="#images">Images</a></li>
+          <li><a href="#tables">Tables</a></li>
+          <li><a href="#figures">Figures</a></li>
+        </ol>
+      </li>
+
+      <li class="pb-2">
+        <a href="#" id="heading2" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+          Components
+        </a>
+        <ol id="collapse2" class="collapse" aria-labelledby="heading2">
+          <li><a href="#alerts">Alerts</a></li>
+          <li><a href="#badge">Badge</a></li>
+          <li><a href="#breadcrumb">Breadcrumb</a></li>
+          <li><a href="#buttons">Buttons</a></li>
+          <li><a href="#card">Card</a></li>
+          <li><a href="#carousel">Carousel</a></li>
+          <li><a href="#collapse">Collapse</a></li>
+          <li><a href="#dropdowns">Dropdowns</a></li>
+          <li><a href="#forms">Forms</a></li>
+          <li><a href="#inputgroup">Input group</a></li>
+          <li><a href="#jumbotron">Jumbotron</a></li>
+          <li><a href="#listgroup">List group</a></li>
+          <li><a href="#modal">Modal</a></li>
+          <li><a href="#navs">Navs</a></li>
+          <li><a href="#navbar">Navbar</a></li>
+          <li><a href="#pagination">Pagination</a></li>
+          <li><a href="#popovers">Popovers</a></li>
+          <li><a href="#scrollspy">Scrollspy</a></li>
+          <li><a href="#tooltips">Tooltips</a></li>
+        </ol>
+      </li>
+
+      <li class="pb-2">
+        <a href="#" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+          Utilities (decoration)
+        </a>
+        <ol id="collapse3" class="collapse" aria-labelledby="heading3">
+        </ol>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+<div class="card-header mt-3">
+  <h3 id="lkcommons">Lorekeeper commons</h3>
+</div>
+
+<h4 id="lknavbar" class="mt-2">Lorekeeper's navbar</h4>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
       <a class="navbar-brand" >
         {{ config('lorekeeper.settings.site_name', 'Lorekeeper') }}
@@ -179,7 +261,8 @@
 
 <br>
 
-<table class="table text-center">
+<div class="container-fluid flex-wrap" style="overflow-x: scroll;">
+<table class="table table-sm text-center">
   <thead>
     <tr>
       <th scope="col">Table</th>
@@ -344,5 +427,6 @@
     </tr>
   </tbody>
 </table>
+</div>
 
 @endsection
