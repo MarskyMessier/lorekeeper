@@ -95,11 +95,14 @@
                 @if (!$isClaim)
                     var $prompt = $('#prompt');
                     var $rewards = $('#rewards');
+                    var $form = $('#prompt-form');
 
                     $prompt.selectize();
                     $prompt.on('change', function(e) {
                         $rewards.load('{{ url('submissions/new/prompt') }}/' + $(this).val());
+                        $form.load('{{url('submissions/new/form') }}/' + $(this).val());
                     });
+                    console.log($prompt.val());
                 @endif
 
                 $confirmButton.on('click', function(e) {
