@@ -71,6 +71,19 @@ return [
             ],
         ],
     ],
+    'Testground' => [
+        'power' => 'admin',
+        'links' => [
+            [
+                'name'  => 'Lorekeeper Commons',
+                'url'   => 'admin/testground/lkcommons'
+            ],
+            [
+                'name'  => 'Boostrap Components',
+                'url'   => 'admin/testground/bootstrap'
+            ],
+        ],
+    ],
     'Users'      => [
         'power' => 'edit_user_info',
         'links' => [

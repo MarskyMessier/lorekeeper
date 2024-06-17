@@ -29,8 +29,9 @@
     <ul>
 
       <li class="pb-2">
+      <a href="#lkcommons">Lorekeeper commons</a>
         <a href="#" id="headinglk" data-toggle="collapse" data-target="#collapselk" aria-expanded="true" aria-controls="collapselk">
-          Lorekeeper commons
+        <i class="fas fa-chevron-down"></i>
         </a>
         <ol id="collapselk" class="collapse show" aria-labelledby="headinglk">
           <li><a href="#lknavbar">Lorekeeper's navbar</a></li>
@@ -39,9 +40,11 @@
           <li><a href="#lkbody">Cards, containers and body</a></li>
         </ol>
       </li>
+
       <li class="pb-2">
+      <a href="#content">Content</a>
         <a href="#" id="heading1" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-          Content
+          <i class="fas fa-chevron-down"></i>
         </a>
         <ol id="collapse1" class="collapse show" aria-labelledby="heading1">
           <li><a href="#container">Containers</a></li>
@@ -54,8 +57,9 @@
       </li>
 
       <li class="pb-2">
+      <a href="#components">Components</a>
         <a href="#" id="heading2" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
-          Components
+          <i class="fas fa-chevron-down"></i>
         </a>
         <ol id="collapse2" class="collapse" aria-labelledby="heading2">
           <li><a href="#alerts">Alerts</a></li>
@@ -81,8 +85,9 @@
       </li>
 
       <li class="pb-2">
+      <a href="#utilities">Utilities</a>
         <a href="#" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
-          Utilities (decoration)
+        <i class="fas fa-chevron-down"></i>
         </a>
         <ol id="collapse3" class="collapse" aria-labelledby="heading3">
         </ol>
@@ -176,6 +181,9 @@
 
 <br>
 
+<hr>
+
+<h4 id="lktext" class="mt-2">Text & headings</h4>
     <p>Paragraph</p>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum neque nisl, aliquet eget varius et, consectetur nec lectus. Proin ac malesuada odio. Vivamus quis nibh non massa vulputate consectetur. Aliquam fermentum, nulla in lobortis laoreet, libero sem pretium risus, in dictum felis risus in mi. Nulla aliquam urna ut turpis lacinia congue. Quisque lobortis massa nec nunc facilisis lobortis eu ut nunc. Maecenas blandit sodales tellus, vel posuere purus bibendum nec. Donec vel nulla lacinia, dignissim nibh sed, hendrerit sem. Integer et mauris id libero placerat dapibus. Nam quam sem, auctor quis purus non, feugiat egestas ipsum.
@@ -205,6 +213,10 @@
     <h6>Heading 6</h6>
 
 <br>
+
+<hr>
+
+<h4 id="lkcards" class="mt-2">Cards, containers and body</h4>
 
     <div class="row">
         <div class="col">
@@ -427,6 +439,39 @@
     </tr>
   </tbody>
 </table>
+</div>
+
+<div class="card-header mt-3">
+  <h3 id="content">Content</h3>
+</div>
+
+<div class="card-header mt-3">
+  <h3 id="components">Components</h3>
+</div>
+
+<div class="alert alert-primary" role="alert">
+  A simple primary alert—check it out!
+</div>
+<div class="alert alert-secondary" role="alert">
+  A simple secondary alert—check it out!
+</div>
+<div class="alert alert-success" role="alert">
+  A simple success alert—check it out!
+</div>
+<div class="alert alert-danger" role="alert">
+  A simple danger alert—check it out!
+</div>
+<div class="alert alert-warning" role="alert">
+  A simple warning alert—check it out!
+</div>
+<div class="alert alert-info" role="alert">
+  A simple info alert—check it out!
+</div>
+<div class="alert alert-light" role="alert">
+  A simple light alert—check it out!
+</div>
+<div class="alert alert-dark" role="alert">
+  A simple dark alert—check it out!
 </div>
 
 @endsection
