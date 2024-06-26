@@ -38,6 +38,7 @@
             node.on('change', function(e) {
                 var val = $(this).val();
                 var $cell = $(this).parent().parent().find('.saleType');
+                var $customCurrency = $(this).closest('.sales-character-entry').find('.customCurrency');
 
                 $cell.children().addClass('hide');
                 $cell.children().children().val(null);
@@ -61,11 +62,9 @@
                 }
 
                 if (val == 'raffle') {
-                    $('#customCurrency').addClass('hide')
-                    $('#customCurrency').removeClass('show');
+                    $customCurrency.addClass('hide');
                 } else {
-                    $('#customCurrency').addClass('show');
-                    $('#customCurrency').removeClass('hide');
+                    $customCurrency.removeClass('hide');
                 }
             });
         }
