@@ -25,34 +25,35 @@
     </div>
 @endif
 
-<div class="alert alert-info">
-    These are displayed on the character's profile, but don't have any effect on site functionality except for the following:
-    <ul>
-        <li>If all switches are off, the character cannot be transferred by the user (directly or through trades).</li>
-        <li>If a transfer cooldown is set, the character also cannot be transferred by the user (directly or through trades) until the cooldown is up.</li>
-    </ul>
-</div>
-<div class="form-group">
-    {!! Form::checkbox('is_giftable', 1, $character->is_giftable, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
-    {!! Form::label('is_giftable', 'Is Giftable', ['class' => 'form-check-label ml-3']) !!}
-</div>
-<div class="form-group">
-    {!! Form::checkbox('is_tradeable', 1, $character->is_tradeable, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
-    {!! Form::label('is_tradeable', 'Is Tradeable', ['class' => 'form-check-label ml-3']) !!}
-</div>
-<div class="form-group">
-    {!! Form::checkbox('is_sellable', 1, $character->is_sellable, ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'resellable']) !!}
-    {!! Form::label('is_sellable', 'Is Resellable', ['class' => 'form-check-label ml-3']) !!}
-</div>
-<div class="card mb-3" id="resellOptions">
-        <div class="card-body">
-            {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the character\'s page.') !!}
-            {!! Form::text('sale_value', $character->sale_value, ['class' => 'form-control']) !!}
-
-            {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
-            {!! Form::text('custom_currency', $character->custom_currency, ['class' => 'form-control']) !!}
-        </div>
+    <div class="alert alert-info">
+        These are displayed on the character's profile, but don't have any effect on site functionality except for the following:
+        <ul>
+            <li>If all switches are off, the character cannot be transferred by the user (directly or through trades).</li>
+            <li>If a transfer cooldown is set, the character also cannot be transferred by the user (directly or through trades) until the cooldown is up.</li>
+        </ul>
     </div>
+    <div class="form-group">
+        {!! Form::checkbox('is_giftable', 1, $character->is_giftable, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+        {!! Form::label('is_giftable', 'Is Giftable', ['class' => 'form-check-label ml-3']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::checkbox('is_tradeable', 1, $character->is_tradeable, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+        {!! Form::label('is_tradeable', 'Is Tradeable', ['class' => 'form-check-label ml-3']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::checkbox('is_sellable', 1, $character->is_sellable, ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'resellable']) !!}
+        {!! Form::label('is_sellable', 'Is Resellable', ['class' => 'form-check-label ml-3']) !!}
+    </div>
+     <div class="form-group">
+        {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the character\'s page.') !!}
+        {!! Form::text('sale_value', $character->sale_value, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.')   !!}
+        {!! Form::text('custom_currency', $character->custom_currency, ['class' => 'form-control']) !!}
+    </div>
+    </div>
+
 <div class="form-group">
     {!! Form::label('On Transfer Cooldown Until (Optional)') !!}
     <div class="input-group">

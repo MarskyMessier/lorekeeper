@@ -118,7 +118,7 @@
             <div class="card-body">
                 {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the ' . ($isMyo ? 'MYO slot' : 'character') . '\'s page.') !!}
                 {!! Form::text('sale_value', old('sale_value'), ['class' => 'form-control']) !!}
-
+                <br>
                 {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
                 {!! Form::text('custom_currency', old('custom_currency'), ['class' => 'form-control']) !!}
             </div>
