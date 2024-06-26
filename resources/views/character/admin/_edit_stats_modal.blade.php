@@ -44,14 +44,15 @@
     {!! Form::checkbox('is_sellable', 1, $character->is_sellable, ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'id' => 'resellable']) !!}
     {!! Form::label('is_sellable', 'Is Resellable', ['class' => 'form-check-label ml-3']) !!}
 </div>
-<div class="form-group">
-    {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the character\'s page. It\'s hidden if zero or lower.') !!}
-    {!! Form::text('sale_value', $character->sale_value, ['class' => 'form-control']) !!}
-</div>
-<div class="form-group">
-    {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
-    {!! Form::text('custom_currency', $character->custom_currency, ['class' => 'form-control']) !!}
-</div>
+<div class="card mb-3" id="resellOptions">
+        <div class="card-body">
+            {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the character\'s page.') !!}
+            {!! Form::text('sale_value', $character->sale_value, ['class' => 'form-control']) !!}
+
+            {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
+            {!! Form::text('custom_currency', $character->custom_currency, ['class' => 'form-control']) !!}
+        </div>
+    </div>
 <div class="form-group">
     {!! Form::label('On Transfer Cooldown Until (Optional)') !!}
     <div class="input-group">
