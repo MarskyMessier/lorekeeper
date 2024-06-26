@@ -155,7 +155,7 @@ class SalesCharacter extends Model {
             return null;
         }
 
-        $customCurrency = 'custom_currency';
+        $customCurrency = $this->custom_currency;
 
         $symbol = $customCurrency ? : config('lorekeeper.settings.currency_symbol');
 

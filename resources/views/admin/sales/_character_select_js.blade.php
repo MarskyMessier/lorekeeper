@@ -59,8 +59,15 @@
                     $cell.children('.pwywOptions').addClass('show');
                     $cell.children('.pwywOptions').removeClass('hide');
                 }
+
+                if (val == 'raffle') {
+                    $('#customCurrency').addClass('hide')
+                    $('#customCurrency').removeClass('show');
+                } else {
+                    $('#customCurrency').addClass('show');
+                    $('#customCurrency').removeClass('hide');
+                }
             });
         }
-
     });
 </script>
