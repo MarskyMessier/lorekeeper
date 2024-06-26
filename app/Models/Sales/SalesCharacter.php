@@ -157,31 +157,58 @@ class SalesCharacter extends Model {
 
         $customCurrency = $this->custom_currency;
 
-        $symbol = $customCurrency ? : config('lorekeeper.settings.currency_symbol');
+        $symbol = config('lorekeeper.settings.currency_symbol');
 
+        if ($this->custom_currency) {
         switch ($this->type) {
             case 'flatsale':
-                return 'Price: '.$symbol.$this->data['price'];
+                return 'Price: '.$this->data['price'].'&#32'.$customCurrency;
                 break;
             case 'auction':
-                return 'Starting Bid: '.$symbol.$this->data['starting_bid'].'<br/>'.
-                'Minimum Increment: '.$symbol.$this->data['min_increment'].
-                (isset($this->data['autobuy']) ? '<br/>Autobuy: '.$symbol.$this->data['autobuy'] : '');
+                return 'Starting Bid: '.$this->data['starting_bid'].'&#32'.$customCurrency.'<br/>'.
+                'Minimum Increment: '.$this->data['min_increment'].'&#32'.$customCurrency.
+                (isset($this->data['autobuy']) ? '<br/>Autobuy: '.$this->data['autobuy'].'&#32'.$customCurrency : '');
                 break;
             case 'ota':
-                return (isset($this->data['autobuy']) ? 'Autobuy: '.$symbol.$this->data['autobuy'].'<br/>' : '').
-                (isset($this->data['minimum']) ? 'Minimum: '.$symbol.$this->data['minimum'].'<br/>' : '');
+                return (isset($this->data['autobuy']) ? 'Autobuy: '.$this->data['autobuy'].'&#32'.$customCurrency.'<br/>' : '').
+                (isset($this->data['minimum']) ? 'Minimum: '.$this->data['minimum'].'&#32'.$customCurrency.'<br/>' : '');
                 break;
             case 'xta':
-                return (isset($this->data['autobuy']) ? 'Autobuy: '.$symbol.$this->data['autobuy'].'<br/>' : '').
-                (isset($this->data['minimum']) ? 'Minimum: '.$symbol.$this->data['minimum'].'<br/>' : '');
+                return (isset($this->data['autobuy']) ? 'Autobuy: '.$this->data['autobuy'].'&#32'.$customCurrency.'<br/>' : '').
+                (isset($this->data['minimum']) ? 'Minimum: '.$this->data['minimum'].'&#32'.$customCurrency.'<br/>' : '');
                 break;
             case 'flaffle':
-                return 'Price: '.$symbol.$this->data['price'];
+                return 'Price: '.$this->data['price'].'&#32'.$customCurrency;
                 break;
             case 'pwyw':
-                return isset($this->data['minimum']) ? 'Minimum: '.$symbol.$this->data['minimum'].'<br/>' : '';
+                return isset($this->data['minimum']) ? 'Minimum: '.$this->data['minimum'].'&#32'.$customCurrency.'<br/>' : '';
                 break;
+        }
+        } else {
+            switch ($this->type) {
+                case 'flatsale':
+                    return 'Price: '.$symbol.$this->data['price'];
+                    break;
+                case 'auction':
+                    return 'Starting Bid: '.$symbol.$this->data['starting_bid'].'<br/>'.
+                    'Minimum Increment: '.$symbol.$this->data['min_increment'].
+                    (isset($this->data['autobuy']) ? '<br/>Autobuy: '.$symbol.$this->data['autobuy'] : '');
+                    break;
+                case 'ota':
+                    return (isset($this->data['autobuy']) ? 'Autobuy: '.$symbol.$this->data['autobuy'].'<br/>' : '').
+                    (isset($this->data['minimum']) ? 'Minimum: '.$symbol.$this->data['minimum'].'<br/>' : '');
+                    break;
+                case 'xta':
+                    return (isset($this->data['autobuy']) ? 'Autobuy: '.$symbol.$this->data['autobuy'].'<br/>' : '').
+                    (isset($this->data['minimum']) ? 'Minimum: '.$symbol.$this->data['minimum'].'<br/>' : '');
+                    break;
+                case 'flaffle':
+                    return 'Price: '.$symbol.$this->data['price'];
+                    break;
+                case 'pwyw':
+                    return isset($this->data['minimum']) ? 'Minimum: '.$symbol.$this->data['minimum'].'<br/>' : '';
+                    break;
+            }
         }
     }
 
