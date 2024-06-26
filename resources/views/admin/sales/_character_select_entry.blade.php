@@ -74,6 +74,13 @@
                         </div>
                     </div>
 
+                    <div class="mb-3 {{ $character->type == 'flatsale' || $character->type == 'flaffle' || $character->type == 'auction' || $character->type == 'xta' || $character->type == 'ota' || $character->type == 'pwyw' ? 'show' : 'hide' }} customCurrency">
+                        <div class="form-group">
+                            {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
+                            {!! Form::text('custom_currency', isset($character->data['custom_currency']) ? $character->data['custom_currency'] : null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
                     <div class="form-group mt-2">
                         {!! Form::label('Notes (Optional)') !!}
                         {!! Form::text('description[]', $character->description, ['class' => 'form-control', 'placeholder' => 'Provide any additional notes necessary']) !!}

@@ -37,7 +37,11 @@
             <h5>Sale Value</h5>
         </div>
         <div class="col-lg-9 col-8">
+        @if (isset ($character->custom_currency))
+            {{ $character->sale_value }} {{ $character->custom_currency}}
+        @else
             {{ Config::get('lorekeeper.settings.currency_symbol') }}{{ $character->sale_value }}
+        @endif
         </div>
     </div>
 @endif

@@ -245,6 +245,7 @@ class SalesService extends Service {
                 'description'  => $data['description'][$key] ?? null,
                 'link'         => $data['link'][$key] ?? null,
                 'is_open'      => $data['character_is_open'][$character->slug] ?? ($data['new_entry'][$key] ? 1 : 0),
+                'custom_currency' =>  $data['custom_currency'][$key] ?? null,
             ]);
         }
     }

@@ -620,6 +620,7 @@ class DesignUpdateManager extends Service {
             $request->character->is_tradeable = isset($data['is_tradeable']);
             $request->character->is_giftable = isset($data['is_giftable']);
             $request->character->sale_value = $data['sale_value'] ?? 0;
+            $characterData['custom_currency'] = $data['custom_currency'] ?? null;
 
             // Invalidate old image if desired
             if (isset($data['invalidate_old'])) {

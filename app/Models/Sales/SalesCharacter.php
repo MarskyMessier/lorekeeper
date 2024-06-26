@@ -13,7 +13,7 @@ class SalesCharacter extends Model {
      * @var array
      */
     protected $fillable = [
-        'sales_id', 'character_id', 'image_id', 'description', 'type', 'data', 'link', 'is_open',
+        'sales_id', 'character_id', 'image_id', 'description', 'type', 'data', 'link', 'is_open', 'custom_currency',
     ];
 
     /**
@@ -33,6 +33,7 @@ class SalesCharacter extends Model {
 
         // Flatsale
         'price'         => 'required_if:sale_type,flat',
+        'custom_currency' => 'nullable',
 
         // Auction/XTA
         'starting_bid'  => 'required_if:type,auction',
@@ -153,7 +154,10 @@ class SalesCharacter extends Model {
         if ($this->type == 'raffle') {
             return null;
         }
-        $symbol = config('lorekeeper.settings.currency_symbol');
+
+        $customCurrency = 'custom_currency';
+
+        $symbol = $customCurrency ? : config('lorekeeper.settings.currency_symbol');
 
         switch ($this->type) {
             case 'flatsale':

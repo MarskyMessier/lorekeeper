@@ -72,6 +72,11 @@
                             </div>
                         </div>
 
+                                <div class="form-group">
+                                    {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
+                                    {!! Form::text('custom_currency[]', null, ['class' => 'form-control']) !!}
+                                </div>
+
                         <div class="form-group my-2">
                             {!! Form::label('Notes (Optional)') !!}
                             {!! Form::text('description[]', null, ['class' => 'form-control', 'placeholder' => 'Provide any additional notes necessary']) !!}
