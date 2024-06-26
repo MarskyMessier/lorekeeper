@@ -49,7 +49,7 @@
         {!! Form::label('Resale Value') !!} {!! add_help('This value is publicly displayed on the MYO slot\'s page.') !!}
         {!! Form::text('sale_value', $tag->getData()['sale_value'], ['class' => 'form-control']) !!}
 
-        {!! Form::label('Custom Currency') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
+        {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
         {!! Form::text('custom_currency', $tag->getData()['custom_currency'], ['class' => 'form-control']) !!}
     </div>
 </div>

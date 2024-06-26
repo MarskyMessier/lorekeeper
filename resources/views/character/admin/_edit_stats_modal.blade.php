@@ -49,7 +49,7 @@
     {!! Form::text('sale_value', $character->sale_value, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('Custom Currency') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
+    {!! Form::label('Custom Currency (Optional)') !!} {!! add_help('This will replace the default site value; make sure to enter a valid currency abbreviation such as USD.') !!}
     {!! Form::text('custom_currency', $character->custom_currency, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
