@@ -186,7 +186,7 @@ class SubmissionController extends Controller {
             return response(404);
         }
 
-        return view('home._prompt', [
+        return view('home._promptform', [
             'form' => $prompt->form,
         ]);
     }
