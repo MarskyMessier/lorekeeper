@@ -349,6 +349,45 @@ class ItemService extends Service {
         return $this->rollbackReturn(false);
     }
 
+    /**
+     * Mass Deletes an item.
+     *
+     * @param \App\Models\Item\Item $item
+     * @param mixed                 $user
+     *
+     * @return bool
+     */
+
+     public function deleteMassItem($item, $user, $check) {
+        DB::beginTransaction();
+
+        try {
+            if(!$check || $check != 1) throw new \Exception('Error confirming');
+
+            if (!$this->logAdminAction($user, 'Deleted Item', 'Deleted '.$item->name)) {
+                throw new \Exception('Failed to log admin action.');
+            }
+
+            $items = Item::where('item_id', $item->id);
+
+            foreach($items as $itemses) {
+                $itemses->delete();
+            }
+
+            $item->tags()->delete();
+            if ($item->has_image) {
+                $this->deleteImage($item->imagePath, $item->imageFileName);
+            }
+            $item->delete();
+
+            return $this->commitReturn(true);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+     }
+
     /**********************************************************************************************
 
         ITEM TAGS

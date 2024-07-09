@@ -282,6 +282,50 @@ class ItemController extends Controller {
         return redirect()->to('admin/data/items');
     }
 
+    /**
+     * Gets the item mass deletion modal.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getMassDeleteItem($id) {
+        $item = Item::find($id);
+
+        return view('admin.items._delete_mass_item', [
+            'item' => $item,
+        ]);
+    }
+
+    /**
+     * Mass deletes an item.
+     *
+     * @param  \Illuminate\Http\Request     $request
+     * @param App\Services\ItemService $service
+     * @param int                      $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postMassDeleteItem(Request $request, ItemService $service, $id) {
+
+        $data = $request->input('im_sure');
+        if(!isset($data) || $data == 0)
+        {
+            flash('Confirmation check not selected. Please double check which delete button you meant to use.')->error();
+            return redirect()->back();
+        }
+
+        if ($id && $service->deleteMassItem(Item::find($id), $data, Auth::user())) {
+            flash('Item deleted successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->to('admin/data/items');
+    }
+
     /**********************************************************************************************
 
         ITEM TAGS

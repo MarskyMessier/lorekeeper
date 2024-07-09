@@ -9,7 +9,8 @@
 
     <h1>{{ $item->id ? 'Edit' : 'Create' }} Item
         @if ($item->id)
-            <a href="#" class="btn btn-outline-danger float-right delete-item-button">Delete Item</a>
+            <a href="#" class="btn btn-danger float-right delete-item-button">Delete Item</a>
+            <a href="#" class="btn btn-outline-danger float-right delete-mass-item-button mr-1">Mass Delete Item</a>
         @endif
     </h1>
 
@@ -195,6 +196,11 @@
             $('.delete-item-button').on('click', function(e) {
                 e.preventDefault();
                 loadModal("{{ url('admin/data/items/delete') }}/{{ $item->id }}", 'Delete Item');
+            });
+
+            $('.delete-mass-item-button').on('click', function(e) {
+                e.preventDefault();
+                loadModal("{{ url('admin/data/items/delete/mass') }}/{{ $item->id }}", 'Mass Delete Item');
             });
         });
     </script>
