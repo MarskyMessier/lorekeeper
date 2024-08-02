@@ -2,9 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\User\UserItem;
+use App\Models\Character\CharacterItem;
+use App\Models\Loot\Loot;
 use App\Models\Item\Item;
 use App\Models\Item\ItemCategory;
 use App\Models\Item\ItemTag;
+use App\Models\Prompt\PromptReward;
+use App\Models\Shop\ShopStock;
 use Illuminate\Support\Facades\DB;
 
 class ItemService extends Service {
@@ -364,21 +369,39 @@ class ItemService extends Service {
         try {
             if(!$check || $check != 1) throw new \Exception('Error confirming');
 
-            if (!$this->logAdminAction($user, 'Deleted Item', 'Deleted '.$item->name)) {
-                throw new \Exception('Failed to log admin action.');
+            // Check first if the item is currently in use
+            $useritems = UserItem::where('item_id', $item->id);
+            $charaitems = CharacterItem::where('item_id', $item->id);
+            $lootitems = Loot::where('rewardable_type', 'Item')->where('rewardable_id', $item->id);
+            $promptitems = PromptReward::where('rewardable_type', 'Item')->where('rewardable_id', $item->id);
+            $shopitems = ShopStock::where('item_id', $item->id);
+ 
+            //delete items
+            foreach ($useritems as $useritemsd) {
+                $useritemsd->delete();
+            }
+            foreach ($charaitems as $charaitemsd) {
+                $charaitemsd->delete();
+            }
+            foreach ($lootitems as $lootitemsd) {
+                $lootitemsd->delete();
+            }
+            foreach ($promptitems as $promptitemsd) {
+                $promptitemsd->delete();
+            }
+            foreach ($shopitems as $shopitemsd) {
+                $shopitemsd->delete();
             }
 
-            $items = Item::where('item_id', $item->id);
-
-            foreach($items as $itemses) {
-                $itemses->delete();
-            }
-
-            $item->tags()->delete();
+            // last deletion
             if ($item->has_image) {
                 $this->deleteImage($item->imagePath, $item->imageFileName);
             }
             $item->delete();
+
+            if (!$this->logAdminAction($user, 'Deleted Item', 'Deleted '.$item->name)) {
+                throw new \Exception('Failed to log admin action.');
+            }
 
             return $this->commitReturn(true);
         } catch (\Exception $e) {

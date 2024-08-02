@@ -314,8 +314,8 @@ class ItemController extends Controller {
             flash('Confirmation check not selected. Please double check which delete button you meant to use.')->error();
             return redirect()->back();
         }
-
-        if ($id && $service->deleteMassItem(Item::find($id), $data, Auth::user())) {
+        
+        if ($id && $service->deleteMassItem(Item::find($id), Auth::user(), $data)) {
             flash('Item deleted successfully.')->success();
         } else {
             foreach ($service->errors()->getMessages()['error'] as $error) {
