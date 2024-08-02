@@ -1,5 +1,5 @@
 @if ($item)
-    {!! Form::open(['url' => 'admin/data/items/delete/mass' . $item->id]) !!}
+    {!! Form::open(['url' => 'admin/data/items/delete-mass/' . $item->id]) !!}
 
     <p>You are about to delete the item <strong>{{ $item->name }}</strong>. This is not reversible. If this item exists in at least one user's possession, this item will be dropped from the user's inventory.</p>
     <p>Are you sure you want to delete <strong>{{ $item->name }}</strong>?</p>

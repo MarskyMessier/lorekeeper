@@ -369,39 +369,40 @@ class ItemService extends Service {
         try {
             if(!$check || $check != 1) throw new \Exception('Error confirming');
 
-            // Check first if the item is currently in use
-            $useritems = UserItem::where('item_id', $item->id);
-            $charaitems = CharacterItem::where('item_id', $item->id);
-            $lootitems = Loot::where('rewardable_type', 'Item')->where('rewardable_id', $item->id);
-            $promptitems = PromptReward::where('rewardable_type', 'Item')->where('rewardable_id', $item->id);
-            $shopitems = ShopStock::where('item_id', $item->id);
- 
-            //delete items
-            foreach ($useritems as $useritemsd) {
-                $useritemsd->delete();
-            }
-            foreach ($charaitems as $charaitemsd) {
-                $charaitemsd->delete();
-            }
-            foreach ($lootitems as $lootitemsd) {
-                $lootitemsd->delete();
-            }
-            foreach ($promptitems as $promptitemsd) {
-                $promptitemsd->delete();
-            }
-            foreach ($shopitems as $shopitemsd) {
-                $shopitemsd->delete();
+            // Check if an item is in a transfer (submission, trade)
+            $userItem = DB::table('user_items')->where('item_id', $item->id)->first();
+
+            if ($userItem) {
+                $userItemId = $userItem->id;
+
+                $trades = DB::table('trades')->whereIn('status', ['Open', 'Pending'])->get();
+
+                foreach ($trades as $trade) {
+                    $data = json_decode($trade->data, true);
+
+                    if (isset($data['sender']['user_items']) && array_key_exists($userItemId, $data['sender']['user_items'])) {
+                        throw new \Exception('This item is currently pending in a trade. Please disable transfers or close any new trades before deleting the item.');
+                    }
+                }
             }
 
-            // last deletion
-            if ($item->has_image) {
-                $this->deleteImage($item->imagePath, $item->imageFileName);
-            }
-            $item->delete();
+            // Find and delete the items
+            $useritems = DB::table('user_items')->where('item_id', $item->id)->delete();
+            $charaitems = DB::table('character_items')->where('item_id', $item->id)->delete();
+            $lootitems = DB::table('loots')->where('rewardable_type', 'Item')->where('rewardable_id', $item->id)->delete();
+            $promptitems = DB::table('prompt_rewards')->where('rewardable_type', 'Item')->where('rewardable_id', $item->id)->delete();
+            $shopitems = DB::table('shop_stock')->where('item_id', $item->id)->delete();
 
             if (!$this->logAdminAction($user, 'Deleted Item', 'Deleted '.$item->name)) {
                 throw new \Exception('Failed to log admin action.');
             }
+
+            // last deletion
+            $item->tags()->delete();
+            if ($item->has_image) {
+                $this->deleteImage($item->imagePath, $item->imageFileName);
+            }
+            $item->delete();
 
             return $this->commitReturn(true);
         } catch (\Exception $e) {

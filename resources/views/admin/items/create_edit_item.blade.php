@@ -200,7 +200,7 @@
 
             $('.delete-mass-item-button').on('click', function(e) {
                 e.preventDefault();
-                loadModal("{{ url('admin/data/items/delete/mass') }}/{{ $item->id }}", 'Mass Delete Item');
+                loadModal("{{ url('admin/data/items/delete-mass') }}/{{ $item->id }}", 'Mass Delete Item');
             });
         });
     </script>
