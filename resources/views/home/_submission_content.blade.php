@@ -126,7 +126,7 @@
                                             @foreach (parseAssetData($character->data) as $key => $type)
                                                 @foreach ($type as $asset)
                                                     <tr>
-                                                        <td>{!! $asset['asset']->displayName !!} ({!! ucfirst($key) !!})</td>
+                                                        <td>{!! $asset['asset'] ? $asset['asset']->displayName : 'Deleted Asset' !!} ({!! ucfirst($key) !!})</td>
                                                         <td>{{ $asset['quantity'] }}</td>
                                                     </tr>
                                                 @endforeach

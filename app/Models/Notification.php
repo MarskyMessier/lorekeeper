@@ -157,4 +157,7 @@ class Notification extends Model {
     public const GALLERY_SUBMISSION_STAFF_COMMENTS = 513;
     public const GALLERY_SUBMISSION_EDITED = 514;
     public const GALLERY_SUBMISSION_PARTICIPANT = 515;
+    public const TRADE_ITEM_DELETE = 1500;
+    public const SUBMISSION_ITEM_DELETE = 1501;
+    public const CLAIM_ITEM_DELETE = 1502;
 }

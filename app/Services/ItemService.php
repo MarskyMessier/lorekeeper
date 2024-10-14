@@ -5,6 +5,11 @@ namespace App\Services;
 use App\Models\Item\Item;
 use App\Models\Item\ItemCategory;
 use App\Models\Item\ItemTag;
+use App\Models\Trade;
+use App\Models\Submission\Submission;
+use App\Models\Character\CharacterDesignUpdate;
+use App\Facades\Settings;
+use App\Facades\Notifications;
 use Illuminate\Support\Facades\DB;
 
 class ItemService extends Service {
@@ -358,30 +363,71 @@ class ItemService extends Service {
      * @return bool
      */
 
-     public function deleteMassItem($item, $user, $check) {
+    public function deleteMassItem($item, $user, $check) {
         DB::beginTransaction();
 
         try {
             if(!$check || $check != 1) throw new \Exception('Error confirming');
 
-            // Check if an item is in a transfer (submission, trade)
+            // Check if an item is held by a user
             $userItem = DB::table('user_items')->where('item_id', $item->id)->first();
 
             if ($userItem) {
-                $userItemId = $userItem->id;
 
-                $trades = DB::table('trades')->whereIn('status', ['Open', 'Pending'])->get();
+                $trades = Trade::whereIn('status', ['Open', 'Pending'])->get();
+                $submissions =  Submission::whereIn('status', ['Draft', 'Pending'])->get();
 
+                // TRADES
                 foreach ($trades as $trade) {
-                    $data = json_decode($trade->data, true);
+                    $userItemId = $userItem->id;
+                    $tradeData = $trade->data;
 
-                    if (isset($data['sender']['user_items']) && array_key_exists($userItemId, $data['sender']['user_items'])) {
-                        throw new \Exception('This item is currently pending in a trade. Please disable transfers or close any new trades before deleting the item.');
-                    }
+                        if (isset($tradeData['sender']['user_items']) && array_key_exists($userItemId, $tradeData['sender']['user_items'])) {
+
+                            // Swiftly removes the item from trades + send a notification for it
+                                unset($userItemId, $tradeData['sender']['user_items']);
+
+                                $trade->update([
+                                    'is_sender_confirmed' => 0,
+                                    'is_recipient_confirmed' => 0,
+                                    'is_sender_trade_confirmed' => 0,
+                                    'is_recipient_trade_confirmed' => 0,
+                                    'data' => json_encode($tradeData)
+                                ]);
+                                $trade->save();
+
+                                Notifications::create('TRADE_ITEM_DELETE', $trade->sender, [
+                                    'trade_id' => $trade->id,
+                                ]);
+                                Notifications::create('TRADE_ITEM_DELETE', $trade->recipient, [
+                                    'trade_id' => $trade->id,
+                                ]);
+                        }
+                }
+
+                // SUBMISSION
+                foreach ($submissions as $submission) {
+                    $userItemId = $userItem->id;
+                    $submissionData = $submission->data;
+                    
+                        if (isset($submissionData['user']['user_items']) && array_key_exists($userItemId, $submissionData['user']['user_items'])) {
+                        
+                            // Swiftly removes the item from submissions + send a notification for it  
+                                unset($userItemId, $submissionData['user']['user_items']);
+                            
+                                $submission->update([
+                                    'data' => json_encode($submissionData)
+                                ]);
+                                $submission->save();
+                            
+                                Notifications::create($submission->prompt_id ? 'SUBMISSION_ITEM_DELETE' : 'CLAIM_ITEM_DELETE', $submission->user, [
+                                    'submission_id' => $submission->id,
+                                ]);
+                        }
                 }
             }
 
-            // Find and delete the items
+            // Find and delete the item
             $useritems = DB::table('user_items')->where('item_id', $item->id)->delete();
             $charaitems = DB::table('character_items')->where('item_id', $item->id)->delete();
             $lootitems = DB::table('loots')->where('rewardable_type', 'Item')->where('rewardable_id', $item->id)->delete();

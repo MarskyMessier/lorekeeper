@@ -437,4 +437,25 @@ return [
         'message' => '<a href="{sender_url}">{sender}</a> has added you as a participant on a gallery submission. (<a href="{url}">View Submission</a>)',
         'url'     => 'gallery/view/{submission_id}',
     ],
+
+    // TRADE_ITEM_DELETE
+    1500  => [
+        'name'    => 'Trade Item Delete',
+        'message' => 'An item you added in an Open or Pending trade has been deleted. (<a href="{url}">View Trade</a>)',
+        'url'     => 'trades/{trade_id}',
+    ],
+
+    // SUBMISSION_ITEM_DELETE
+    1501  => [
+        'name'    => 'Submission Item Delete',
+        'message' => 'An item you added in your submission (#{submission_id}) has been deleted. (<a href="{url}">View Submission</a>)',
+        'url'     => 'submissions/view/{submission_id}',
+    ],
+
+    // CLAIM_ITEM_DELETE
+    1502  => [
+        'name'    => 'Claim Item Delete',
+        'message' => 'An item you added in your claim (#{submission_id}) has been deleted. (<a href="{url}">View Claim</a>)',
+        'url'     => 'claims/view/{submission_id}',
+    ],
 ];
