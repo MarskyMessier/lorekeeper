@@ -1,22 +1,22 @@
-<div class="row">
-    <div class="col-lg-3 col-4">
+<div class="row no-gutters">
+    <div class="col-lg-3 col-5">
         <h5>Owner</h5>
     </div>
-    <div class="col-lg-9 col-8">{!! $character->displayOwner !!}</div>
+    <div class="col-lg-9 col-7">{!! $character->displayOwner !!}</div>
 </div>
 @if (!$character->is_myo_slot)
-    <div class="row">
-        <div class="col-lg-3 col-4">
+    <div class="row no-gutters">
+        <div class="col-lg-3 col-5">
             <h5>Category</h5>
         </div>
-        <div class="col-lg-9 col-8">{!! $character->category->displayName !!}</div>
+        <div class="col-lg-9 col-7">{!! $character->category->displayName !!}</div>
     </div>
 @endif
-<div class="row">
-    <div class="col-lg-3 col-4">
+<div class="row no-gutters">
+    <div class="col-lg-3 col-5">
         <h5 class="mb-0">Created</h5>
     </div>
-    <div class="col-lg-9 col-8">{!! format_date($character->created_at) !!}</div>
+    <div class="col-lg-9 col-7">{!! format_date($character->created_at) !!}</div>
 </div>
 
 <hr />
@@ -32,11 +32,11 @@
     <i class="text-{{ $character->is_sellable ? 'success far fa-circle' : 'danger fas fa-times' }} fa-fw mr-2"></i> {{ $character->is_sellable ? 'Can' : 'Cannot' }} be sold
 </h5>
 @if ($character->sale_value > 0)
-    <div class="row">
-        <div class="col-lg-3 col-4">
+    <div class="row no-gutters">
+        <div class="col-lg-3 col-5">
             <h5>Sale Value</h5>
         </div>
-        <div class="col-lg-9 col-8">
+        <div class="col-lg-9 col-7 pl-1">
         @if (isset ($character->custom_currency))
             {{ $character->sale_value }} {{ $character->custom_currency}}
         @else
@@ -46,11 +46,11 @@
     </div>
 @endif
 @if ($character->transferrable_at && $character->transferrable_at->isFuture())
-    <div class="row">
-        <div class="col-lg-3 col-4">
+    <div class="row no-gutters">
+        <div class="col-lg-3 col-5">
             <h5>Cooldown</h5>
         </div>
-        <div class="col-lg-9 col-8">Cannot be transferred until {!! format_date($character->transferrable_at) !!}</div>
+        <div class="col-lg-9 col-7 pl-1">Cannot be transferred until {!! format_date($character->transferrable_at) !!}</div>
     </div>
 @endif
 @if (Auth::check() && Auth::user()->hasPower('manage_characters'))
