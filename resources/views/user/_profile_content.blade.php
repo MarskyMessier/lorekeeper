@@ -138,6 +138,11 @@
                         @endif {{ Illuminate\Support\Str::limit($character->fullName, 20, $end = '...') }}
                     </a>
                 </div>
+                @if ($character->coowner_id == $user->id)
+                    <small class="text-muted">
+                        (Co-Owner)
+                    </small>
+                @endif
             </div>
         @endforeach
     </div>

@@ -15,6 +15,11 @@
                 <div class="small">
                     {!! $character->image->species_id ? $character->image->species->displayName : 'No Species' !!} ・ {!! $character->image->rarity_id ? $character->image->rarity->displayName : 'No Rarity' !!}
                 </div>
+                @if ($character->coowner_id == $user->id)
+                    <small class="text-muted">
+                        (Co-Owner)
+                    </small>
+                @endif
             </div>
         @endforeach
     </div>

@@ -146,10 +146,20 @@ class User extends Authenticatable implements MustVerifyEmail {
     }
 
     /**
-     * Get the user's characters.
+     * Get only the user's characters.
      */
-    public function characters() {
-        return $this->hasMany(Character::class)->where('is_myo_slot', 0)->orderBy('sort', 'DESC');
+    public function primaryCharacters()
+    {
+        return $this->hasMany('App\Models\Character\Character')->where('is_myo_slot', 0)->orderBy('sort', 'DESC');
+    }
+
+    /**
+     * Get the user's characters (including co-owned).
+     */
+    public function characters()
+    {
+        $first = ($this->hasMany(Character::class, 'coowner_id')->where('is_myo_slot', 0)->orderBy('sort', 'DESC'));
+        return $this->hasMany(Character::class)->where('is_myo_slot', 0)->orderBy('sort', 'DESC')->union($first);
     }
 
     /**
@@ -631,6 +641,30 @@ class User extends Authenticatable implements MustVerifyEmail {
 
         //
         if ($count > 0) {
+            $this->settings->is_fto = 0;
+        }
+        $this->settings->save();
+    }
+
+        /**
+     * Checks if there are characters credited to the user's alias and updates ownership to their account accordingly.
+     */
+    public function updateCoCharacters()
+    {
+        if(!$this->hasAlias) return;
+
+        // Pluck alias from url and check for matches
+        $urlCharacters = Character::whereNotNull('coowner_url')->pluck('coowner_url','id');
+        $matches = []; $count = 0;
+        foreach($this->aliases as $alias) {
+            // Find all urls from the same site as this alias
+            foreach($urlCharacters as $key=>$character) preg_match_all(Config::get('lorekeeper.sites.'.$alias->site.'.regex'), $character, $matches[$key]);
+            // Find all alias matches within those, and update the character's owner
+            foreach($matches as $key=>$match) if($match[1] != [] && strtolower($match[1][0]) == strtolower($alias->alias)) {Character::find($key)->update(['coowner_url' => null, 'coowner_id' => $this->id]); $count += 1;}
+        }
+
+        //
+        if($count > 0) {
             $this->settings->is_fto = 0;
         }
         $this->settings->save();

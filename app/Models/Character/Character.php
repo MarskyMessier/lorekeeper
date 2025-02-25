@@ -32,7 +32,7 @@ class Character extends Model {
         'is_sellable', 'is_tradeable', 'is_giftable',
         'sale_value', 'transferrable_at', 'is_visible',
         'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'sort',
-        'is_myo_slot', 'name', 'trade_id', 'owner_url',
+        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'coowner_id', 'coowner_url'
     ];
 
     /**
@@ -81,6 +81,7 @@ class Character extends Model {
         'image'                 => 'required|mimes:jpeg,jpg,gif,png|max:2048',
         'thumbnail'             => 'nullable|mimes:jpeg,jpg,gif,png|max:2048',
         'owner_url'             => 'url|nullable',
+        'coowner_url'           => 'url|nullable',
     ];
 
     /**
@@ -126,6 +127,14 @@ class Character extends Model {
      */
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the user who owns the character.
+     */
+    public function coowner()
+    {
+        return $this->belongsTo('App\Models\User\User', 'coowner_id');
     }
 
     /**
@@ -293,6 +302,18 @@ class Character extends Model {
     }
 
     /**
+     * Display the owner's name.
+     * If the owner is not a registered user on the site, this displays the owner's dA name.
+     *
+     * @return string
+     */
+    public function getDisplayCoOwnerAttribute()
+    {
+        if($this->coowner_id) return $this->coowner->displayName;
+        else return prettyProfileLink($this->coowner_url);
+    }
+
+    /**
      * Gets the character's code.
      * If this is a MYO slot, it will return the MYO slot's name.
      *
@@ -384,6 +405,36 @@ class Character extends Model {
 
             $owner->settings->is_fto = 0;
             $owner->settings->save();
+        }
+    }
+
+    // checks if chara has a co-owner
+    public function gethasCoOwner()
+    {
+        if($this->coowner_id != NULL || $this->coowner_url != NUll) return true;
+        else return false;
+    }
+
+    /**
+     * Checks if the character's owner has registered on the site and updates ownership accordingly.
+     */
+    public function updateCoOwner()
+    {
+        if($this->hasCoOwner) {
+            // Return if the character has an owner on the site already.
+            if($this->coowner_id) return;
+
+            // Check if the owner has an account and update the character's user ID for them.
+            $owner = checkAlias($this->coowner_url);
+
+            if(is_object($owner)) {
+                $this->coowner_id = $owner->id;
+                $this->coowner_url = null;
+                $this->save();
+
+                $owner->settings->is_fto = 0;
+                $owner->settings->save();
+            }
         }
     }
 

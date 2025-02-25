@@ -52,6 +52,8 @@ class CharacterController extends Controller {
 
             $this->character->updateOwner();
 
+            $this->character->updateCoOwner();
+
             if (config('lorekeeper.extensions.previous_and_next_characters.display')) {
                 $query = Character::myo(0);
                 // Get only characters of this category if pull number is limited to category
